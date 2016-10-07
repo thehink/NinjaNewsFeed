@@ -1,24 +1,37 @@
-import 'normalize.css/normalize.css';
-import 'styles/App.css';
+require('normalize.css/normalize.css');
+require('styles/Bootstrap.min.css');
+require('styles/font-awesome.min.css');
+require('styles/App.css');
 
-import React from 'react';
-import Link from 'react-router'
+import React, { Component } from 'react';
+import {Link} from 'react-router';
 
-let yeomanImage = require('../images/yeoman.png');
-
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
-      <div className="index">
-        <img src={yeomanImage} alt="Yeoman Generator" />
-        <div className="notice">App</div>
-        <Link to={'/'}>Main</Link>
-        <Link to={'/feeds'}>Feeds</Link>
-        <Link to={'/login'}>Login</Link>
-        <div className="asd">
-          {this.props.children}
-        </div>
-      </div>
+      <app>
+          <nav className="navbar navbar-fixed-top navbar-dark bg-inverse">
+          <div className="container">
+           <Link to={'/'} className="navbar-brand">Ninja News Feed</Link>
+           <ul className="nav navbar-nav">
+             <li className="nav-item active">
+               <Link to={'/feeds'} className="nav-link">Feeds <span className="sr-only">(current)</span></Link>
+             </li>
+             <li className="nav-item">
+               <Link to={'/about'} className="nav-link">About</Link>
+             </li>
+             <li className="nav-item">
+               <Link to={'/login'} className="nav-link">Login</Link>
+             </li>
+           </ul>
+         </div>
+       </nav>
+
+       <div className="container">
+         {this.props.children}
+
+       </div>
+   </app>
     );
   }
 }

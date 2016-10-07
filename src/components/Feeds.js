@@ -1,13 +1,19 @@
-import 'normalize.css/normalize.css';
-import 'styles/App.css';
-
 import React from 'react';
+import Fetch from 'react-fetch'
+
+import Feed from './feed';
+import {PageHeader} from 'react-bootstrap';
 
 class Feeds extends React.Component {
+
   render() {
     return (
       <div className="feeds">
-        The feeds
+        <PageHeader>Feed <small> - a feed</small></PageHeader>
+        <Feed/>
+        <Feed/>
+        <Feed/>
+        <Feed/>
       </div>
     );
   }

@@ -28,5 +28,6 @@ const Routes = (
 <Route path='*' component={NotFound}/>
 */
 
+console.log(Routes)
 
 export default Routes;
