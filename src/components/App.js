@@ -3,11 +3,32 @@ require('styles/Bootstrap.min.css');
 require('styles/font-awesome.min.css');
 require('styles/App.css');
 
-import React, { Component } from 'react';
+import React from 'react';
 import {Link} from 'react-router';
+import Reflux from 'reflux';
 
-class App extends Component {
+Reflux.defineReact(React, Reflux);
+
+import AuthStore from '../stores/Auth';
+import AuthActions from '../actions/Auth';
+
+class App extends Reflux.Component {
+
+  constructor(props) {
+      super(props);
+      this.state = {};
+      this.store = AuthStore;
+  }
+
+  onLogout(event){
+    event.preventDefault();
+    AuthActions.logout();
+  }
+
   render() {
+
+
+
     return (
       <app>
           <nav className="navbar navbar-fixed-top navbar-dark bg-inverse">
@@ -15,7 +36,7 @@ class App extends Component {
            <Link to={'/'} className="navbar-brand">Ninja News Feed</Link>
            <ul className="nav navbar-nav">
              <li className="nav-item active">
-               <Link to={'/feeds'} className="nav-link">Feeds <span className="sr-only">(current)</span></Link>
+               <Link to={'/feed'} className="nav-link">Feed <span className="sr-only">(current)</span></Link>
              </li>
              <li className="nav-item">
                <Link to={'/about'} className="nav-link">About</Link>
@@ -24,6 +45,13 @@ class App extends Component {
                <Link to={'/login'} className="nav-link">Login</Link>
              </li>
            </ul>
+           {this.state.authed && (
+           <ul className="nav navbar-nav pull-xs-right">
+             <li className="nav-item">
+               <a href="" className="nav-link" onClick={(e) => this.onLogout(e)}>Logout {this.state.user.username}</a>
+             </li>
+           </ul>)}
+
          </div>
        </nav>
 

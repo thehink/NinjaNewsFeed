@@ -67,11 +67,12 @@ class miniRoute{
 
   function matchPath($path, $userPath){
     $regPath = $this->getRegex($path);
-    $isMatched = preg_match_all("/" . $regPath . "[\/]?$/", $userPath, $matched);
+    $isMatched = preg_match_all("/^" . $regPath . "[\/]?$/", $userPath, $matched);
     return !empty($isMatched);
   }
 
   function output($status,  $response=''){
+	 header("Access-Control-Allow-Origin: *");
     header('Content-Type: application/json');
     http_response_code($status);
     echo json_encode([
@@ -106,7 +107,7 @@ class miniRoute{
             $response = call_user_func($method, $matches);
           $this->output(200, $response);
         } catch (Exception $e) {
-          $this->output(500, $e->getMessage());
+          $this->output($e->getCode(), $e->getMessage());
         }
         exit;
       }
