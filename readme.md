@@ -9,5 +9,8 @@ For a school assignment.
 
 ## Usage
 
+## Todo
+* Refactor AuthStore and cleanup code
+
 ## Credits
 * [react-webpack-generators](https://github.com/react-webpack-generators/generator-react-webpack)

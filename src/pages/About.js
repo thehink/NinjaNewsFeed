@@ -2,7 +2,7 @@ import React from 'react';
 import { Media, PageHeader } from 'react-bootstrap';
 
 
-import YeoMan from '../images/about.png';
+import AboutImage from '../images/about.png';
 
 class About extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class About extends React.Component {
         <PageHeader>About</PageHeader>
         <Media>
          <Media.Left align="top">
-           <img width={64} height={64} src={YeoMan} alt="Image"/>
+           <img width={64} height={64} src={AboutImage} alt="Image"/>
          </Media.Left>
          <Media.Body>
            <Media.Heading>Stuff</Media.Heading>
