@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FontAwesome from 'react-fontawesome';
-import {Button, Badge, Label, Modal, FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
-import {Link} from 'react-router';
+import {Button, Modal, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
-import FeedActions from '../actions/feedActions';
+import FeedActions from '../actions/Feed';
 
 class NewPostModal extends React.Component {
 

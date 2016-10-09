@@ -32,7 +32,7 @@ class Users{
     }
   }
 
-  public static function auth(){
+  public static function authUser(){
     $headers = apache_request_headers();
     $token = null;
 
@@ -60,8 +60,6 @@ class Users{
     }else{
       throw new Exception("Unauthorized", 401);
     }
-
-    print_r($headers);
   }
 
   public static function logout($userId = NULL){
@@ -71,6 +69,7 @@ class Users{
   public static function loggedIn(){
 
   }
+
 
   public static function getAvatar($matches){
     $file = $matches['file'];

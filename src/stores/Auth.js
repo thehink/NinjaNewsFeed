@@ -15,7 +15,7 @@ class AuthStore extends Reflux.Store
           user: null,
           authed: false,
           token: localStorage.getItem('token'),
-          loading: false,
+          loading: false
         };
         if(localStorage.getItem('token'))
           AuthActions.getUser();
@@ -41,6 +41,7 @@ class AuthStore extends Reflux.Store
         this.setUser(user);
       })
       .catch(error => {
+        this.setState({error: error});
         this.setUser();
       });
   }
@@ -49,7 +50,7 @@ class AuthStore extends Reflux.Store
     var options = {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({
         'username': username,
@@ -95,7 +96,7 @@ class AuthStore extends Reflux.Store
         user: null,
         authed: false,
         token: null,
-        loading: false,
+        loading: false
       });
     }
 
@@ -107,10 +108,12 @@ class AuthStore extends Reflux.Store
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Token ' + this.state.token,
-        'Origin': '',
+        'Origin': ''
       },
       body: null
     };
+
+    return obj;
   }
 
   isUserAuthed() {
@@ -118,8 +121,8 @@ class AuthStore extends Reflux.Store
   }
 
   static get id() {
-      return 'authstore';
+      return 'authstore'
   }
-};
+}
 
 export default AuthStore;

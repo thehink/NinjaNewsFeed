@@ -81,16 +81,16 @@ class miniRoute{
     ]);
   }
 
-  public function GET($path, $func){
-    $this->paths['GET'][$path] = $func;
+  public function GET($path, $func, $middleWare = NULL){
+    $this->paths['GET'][$path] = ['method' => $func, 'middleware' => $middleWare];
   }
 
-  public function POST($path, $func){
-    $this->paths['POST'][$path] = $func;
+  public function POST($path, $func, $middleWare = NULL){
+    $this->paths['POST'][$path] = ['method' => $func, 'middleware' => $middleWare];
   }
 
-  public function PUT($path, $func){
-    $this->paths['PUT'][$path] = $func;
+  public function PUT($path, $func, $middleWare = NULL){
+    $this->paths['PUT'][$path] = ['method' => $func, 'middleware' => $middleWare];
   }
 
   public function route(){
@@ -98,13 +98,20 @@ class miniRoute{
     $requestMethod = $this->getRequestMethod();
 
     #Loop through stored endpoints and try match the user path
-    foreach($this->paths[$requestMethod] as $path => $method){
+    foreach($this->paths[$requestMethod] as $path => $funcs){
       if($this->matchPath($path, $userPath)){
         try {
           $matches = $this->parsePath($path, $userPath);
           $response = [];
-          if(is_callable($method))
-            $response = call_user_func($method, $matches);
+          $middleware = null;
+
+
+          if(is_callable($funcs['middleware']))
+            $middleware = call_user_func($funcs['middleware'], $matches);
+
+          if(is_callable($funcs['method']))
+            $response = call_user_func_array($funcs['method'], [$matches, $middleware]);
+
           $this->output(200, $response);
         } catch (Exception $e) {
           $this->output($e->getCode(), $e->getMessage());

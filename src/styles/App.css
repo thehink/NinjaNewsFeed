@@ -1,6 +1,6 @@
 /* Base Application Styles */
 body {
-  padding-top: 5rem;
+
 }
 
 .feed-entry .arrow-right{
@@ -105,4 +105,54 @@ button.date{
 }
 .feed-wrapper .title-link:hover{
   color: #444;
+}
+
+.feed-controls{
+  color: #777;
+  font-size: 0.4em;
+}
+
+.feed-controls:hover{
+  color: #5998ff;
+  cursor: pointer;
+}
+
+.like-button:hover{
+  cursor: pointer;
+}
+
+.post-liked{
+  color: #5998ff;
+}
+
+.page{
+  margin-top: 20px;
+}
+
+.page .page-header{
+  margin-bottom: 20px;
+  border-bottom: 1px solid #EEE;
+}
+
+.login-form .form-group > div{
+  margin-bottom: 20px;
+}
+
+.comments{
+  margin: 30px 0;
+  padding-top: 30px;
+  border-top: 1px solid #EEE;
+
+}
+
+.comments .media{
+  margin: 5px 0;
+  padding-bottom: 5px;
+  background: #FAFAFA;
+}
+
+.comments .media-heading{
+  font-size: 1.2em;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #EEE;
 }

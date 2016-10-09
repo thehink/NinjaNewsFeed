@@ -3,12 +3,13 @@ import Reflux from 'reflux';
 
 //stores
 import AuthStore from '../stores/Auth';
-import FeedStore from '../stores/feedStore';
+import FeedStore from '../stores/Feed';
 
 //action
-import FeedActions from '../actions/feedActions';
+import FeedActions from '../actions/Feed';
 
-import FeedList from '../components/Feed/FeedList';
+//Components
+import FeedList from '../components/FeedList';
 import NewPostModal from '../components/NewPost';
 
 import {PageHeader} from 'react-bootstrap';
@@ -19,7 +20,7 @@ class Feed extends Reflux.Component
     constructor(props) {
         super(props);
         this.state = {
-          showNewPost: false,
+          showNewPost: false
         };
         this.stores = [AuthStore, FeedStore];
     }
@@ -32,14 +33,18 @@ class Feed extends Reflux.Component
 
     }
 
+    refreshFeeds(){
+      FeedActions.loadFeed();
+    }
+
     render() {
         let lgClose = () => this.setState({ showNewPost: false });
         let lgShow = () => this.setState({ showNewPost: true });
 
         return (
-          <div className="feed-page">
+          <div className="feed-page page">
           <NewPostModal show={this.state.showNewPost} onHide={lgClose}/>
-          <PageHeader>Feed <small> - a feed</small> {this.state.authed && (<span><FontAwesome className='add-post-button' name='plus' onClick={lgShow} /></span>)}</PageHeader>
+          <PageHeader>Feed <span><FontAwesome className='feed-controls' name='refresh' onClick={this.refreshFeeds} /></span> {this.state.authed && (<span><FontAwesome className='feed-controls add-post-button' name='plus' onClick={lgShow} /></span>)}</PageHeader>
             <FeedList
               feed={this.state.feed}
               isLoading={this.state.loading}

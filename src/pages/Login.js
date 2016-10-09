@@ -9,7 +9,8 @@ import {
   Col,
   Checkbox,
   ControlLabel,
-  Alert
+  Alert,
+  PageHeader
 } from 'react-bootstrap';
 
 import AuthStore from '../stores/Auth';
@@ -33,53 +34,58 @@ class Login extends Reflux.Component {
   }
 
   render() {
-    return this.state.authed ?
-    (<Alert>Welcome {this.state.user.username}</Alert>) :
-    (
-      <Form horizontal onSubmit={(e) => this.onSubmit(e)}>
-        <FormGroup controlId="loginEmail">
-          <Col componentClass={ControlLabel} sm={2}>
-            Email/Username
-          </Col>
-          <Col sm={10}>
-            <FormControl ref="email" type="text" placeholder="Username/Email" />
-          </Col>
-        </FormGroup>
+    return (
+    <div className="page">
+      <PageHeader>Login</PageHeader>
+      {this.state.authed ? (<Alert>Welcome {this.state.user.username}</Alert>) : this.renderForm()}
+    </div>);
+  }
 
-        <FormGroup controlId="loginPassword">
-          <Col componentClass={ControlLabel} sm={2}>
-            Password
-          </Col>
-          <Col sm={10}>
-            <FormControl ref="password" type="password" placeholder="Password" />
-          </Col>
-        </FormGroup>
+  renderForm() {
+    return (<Form className="login-form" horizontal onSubmit={(e) => this.onSubmit(e)}>
+    <p>You can use username: <b>asd</b> and password: <b>asd</b> to login)</p>
+      <FormGroup controlId="loginEmail">
+        <Col componentClass={ControlLabel} sm={3}>
+          Email/Username
+        </Col>
+        <Col sm={9}>
+          <FormControl ref="email" type="text" placeholder="Username/Email" />
+        </Col>
+      </FormGroup>
 
-        <FormGroup>
-          <Col smOffset={2} sm={10}>
-            <Checkbox>Remember me</Checkbox>
-          </Col>
-        </FormGroup>
+      <FormGroup controlId="loginPassword">
+        <Col componentClass={ControlLabel} sm={3}>
+          Password
+        </Col>
+        <Col sm={9}>
+          <FormControl ref="password" type="password" placeholder="Password" />
+        </Col>
+      </FormGroup>
 
-        <FormGroup>
-          <Col smOffset={2} sm={10}>
-            <Button type="submit">
-              Sign in
-            </Button>
-          </Col>
-        </FormGroup>
-        <FormGroup>
+      <FormGroup>
         <Col smOffset={2} sm={10}>
-        {this.state.loading && (
-            <p>Loggin in...</p>
-          )}
-        {this.state.error && (
-            <Alert bsStyle="danger">{this.state.error}</Alert>
-          )}
-          </Col>
-          </FormGroup>
-      </Form>
-    );
+          <Checkbox>Remember me</Checkbox>
+        </Col>
+      </FormGroup>
+
+      <FormGroup>
+        <Col smOffset={2} sm={10}>
+          <Button type="submit">
+            Sign in
+          </Button>
+        </Col>
+      </FormGroup>
+      <FormGroup>
+      <Col smOffset={2} sm={10}>
+      {this.state.loading && (
+          <p>Loggin in...</p>
+        )}
+      {this.state.error && (
+          <Alert bsStyle="danger">{this.state.error}</Alert>
+        )}
+        </Col>
+        </FormGroup>
+    </Form>)
   }
 }
 
