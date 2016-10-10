@@ -12,9 +12,9 @@ class FeedList extends React.Component {
   render() {
     return (
       <div className="feeds">
+        {this.props.error ? <Alert bsStyle="danger">Could not load feed... <br /><b>Error:</b> {this.props.error.message}</Alert> : ''}
         {this.props.feed.map(this.renderFeedEntry)}
         {this.props.isLoading?'Loading':''}
-        {this.props.error ? <Alert bsStyle="danger">Could not load feed...</Alert> : ''}
       </div>
     );
   }

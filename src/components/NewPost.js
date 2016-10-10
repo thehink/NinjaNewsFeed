@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Button, Modal, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import {Button, Modal, FormGroup, ControlLabel, FormControl, Alert} from 'react-bootstrap';
 
 import FeedActions from '../actions/Feed';
 
@@ -16,12 +16,11 @@ class NewPostModal extends React.Component {
     let title = ReactDOM.findDOMNode(this.refs.title).value;
     let content = ReactDOM.findDOMNode(this.refs.content).value;
     FeedActions.newPost(title, content);
-    this.props.onHide();
   }
 
   render() {
     return (
-      <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-sm">
+      <Modal show={this.props.show} onHide={this.props.onHide} bsSize="large" aria-labelledby="contained-modal-title-sm">
        <Modal.Header closeButton>
          <Modal.Title id="contained-modal-title-sm">New Post</Modal.Title>
        </Modal.Header>
@@ -39,7 +38,9 @@ class NewPostModal extends React.Component {
            <Button type="submit">
             Post
           </Button>
-         </form>
+
+         </form><br />
+         {this.props.error ? <Alert bsStyle="danger"><b>Error:</b> {this.props.error.message}</Alert> : ''}
        </Modal.Body>
        <Modal.Footer>
          <Button onClick={this.props.onHide}>Close</Button>

@@ -35,6 +35,7 @@ class Feed extends Reflux.Component
 
     refreshFeeds(){
       FeedActions.loadFeed();
+
     }
 
     render() {
@@ -43,7 +44,7 @@ class Feed extends Reflux.Component
 
         return (
           <div className="feed-page page">
-          <NewPostModal show={this.state.showNewPost} onHide={lgClose}/>
+          <NewPostModal show={this.state.showNewPost} error={this.state.postError} onHide={lgClose}/>
           <PageHeader>Feed <span><FontAwesome className='feed-controls' name='refresh' onClick={this.refreshFeeds} /></span> {this.state.authed && (<span><FontAwesome className='feed-controls add-post-button' name='plus' onClick={lgShow} /></span>)}</PageHeader>
             <FeedList
               feed={this.state.feed}

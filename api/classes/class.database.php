@@ -74,7 +74,7 @@ class Database{
       'id' => 1,
       'username' => 'asd',
       'password' => 'asd',
-      'fullname' => 'Someone Oskarsson',
+      'fullname' => 'Johan Andersson',
       'avatar' => 'avatar1.png',
       'token' => 'g52yh54wu723gh7t89gega'
     ],
@@ -82,7 +82,7 @@ class Database{
       'id' => 2,
       'username' => 'Someone2',
       'password' => 'thisisnotasafepassword',
-      'fullname' => 'Someone Oskarsson',
+      'fullname' => 'William Johansson',
       'avatar' => 'avatar2.png',
       'token' => 'q4j67nw54uw54y54j7'
     ],
@@ -91,7 +91,7 @@ class Database{
       'id' => 3,
       'username' => 'Someone3',
       'password' => 'thisisnotasafepassword',
-      'fullname' => 'Someone Oskarsson',
+      'fullname' => 'Oskar Oskarsson',
       'avatar' => 'avatar3.png',
       'token' => '2u56un6u356yhryhthr'
     ],
@@ -99,7 +99,7 @@ class Database{
       'id' => 4,
       'username' => 'Someone4',
       'password' => 'thisisnotasafepassword',
-      'fullname' => 'Someone Oskarsson',
+      'fullname' => 'Olivia Persson',
       'avatar' => 'avatar4.png',
       'token' => 'g52yh54wu7237g547q547g5ygh7t89gega'
     ],
@@ -107,7 +107,7 @@ class Database{
       'id' => 5,
       'username' => 'Someone5',
       'password' => 'thisisnotasafepassword',
-      'fullname' => 'Someone Oskarsson',
+      'fullname' => 'Person Personsson',
       'avatar' => 'avatar5.png',
       'token' => '36u5uh36yurxtshsrt'
     ],

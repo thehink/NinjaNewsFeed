@@ -93,7 +93,7 @@ class FeedStore extends Reflux.Store
   newPost(){
     this.setState({
       loading: true,
-      error: false
+      postError: false
     });
   }
 
@@ -101,14 +101,15 @@ class FeedStore extends Reflux.Store
     this.state.feed.unshift(response);
     this.setState({
       loading: false,
-      error: false
+      postError: false,
+      showNewPost: false
     });
   }
 
   newPostFailed(error){
     this.setState({
       loading: false,
-      error: error
+      postError: error
     });
   }
 

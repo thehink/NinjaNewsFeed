@@ -13,9 +13,17 @@ class Feed {
     $inputJSON = file_get_contents('php://input');
     $input = json_decode($inputJSON, TRUE);
     if(!$input)
-      throw new Exception('Invalid login data!', 400);
+      throw new Exception('Invalid comment data!', 400);
+
+    if(!isset($input['body'])){
+      throw new Exception("No comment body!", 400);
+    }
 
     $body = filter_var($input['body'], FILTER_SANITIZE_STRING);
+
+    if(strlen(str_replace(' ', '', $body)) < 3){
+      throw new Exception("You need at least 3 characters!", 403);
+    }
 
     //if we were using a real database
     //Database::getDB->addPost($title, $body, $user);
@@ -72,11 +80,17 @@ class Feed {
   public static function newPost($matches, $user){
     $inputJSON = file_get_contents('php://input');
     $input = json_decode($inputJSON, TRUE);
-    if(!$input)
-      throw new Exception('Invalid login data!', 400);
+    if(!$input || !isset($input['title']) || !isset($input['body']))
+      throw new Exception('Invalid post data!', 400);
+
+
 
     $title = filter_var($input['title'], FILTER_SANITIZE_STRING);
     $body = filter_var($input['body'], FILTER_SANITIZE_STRING);
+
+    if(strlen($title) < 3 || strlen($body) < 3){
+      throw new Exception('Post title and body must be 3 or more characters long!', 400);
+    }
 
     //if we were using a real database
     //Database::getDB->addPost($title, $body, $user);
