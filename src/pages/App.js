@@ -35,8 +35,8 @@ class App extends Reflux.Component {
           <div className="container">
            <Link to={'/'} className="navbar-brand">Ninja News Feed</Link>
            <ul className="nav navbar-nav">
-             <li className="nav-item active">
-               <Link to={'/feed'} className="nav-link">Feed <span className="sr-only">(current)</span></Link>
+             <li className="nav-item">
+               <Link to={'/feed'} className="nav-link">Feed</Link>
              </li>
              <li className="nav-item">
                <Link to={'/about'} className="nav-link">About</Link>

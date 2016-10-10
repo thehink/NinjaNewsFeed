@@ -12,21 +12,22 @@ class Feed {
   public static function addComment($matches, $user){
     $inputJSON = file_get_contents('php://input');
     $input = json_decode($inputJSON, TRUE);
+
+    //make sure we actually got the stuff we needed: valid json with a body key
     if(!$input)
       throw new Exception('Invalid comment data!', 400);
 
-    if(!isset($input['body'])){
+    if(!isset($input['body']))
       throw new Exception("No comment body!", 400);
-    }
 
+    //Strip input of any potentially maillicious code
     $body = filter_var($input['body'], FILTER_SANITIZE_STRING);
 
     if(strlen(str_replace(' ', '', $body)) < 3){
       throw new Exception("You need at least 3 characters!", 403);
+    }else if(strlen($body) > 500){
+      throw new Exception("Max 500 characters in a comment!", 403);
     }
-
-    //if we were using a real database
-    //Database::getDB->addPost($title, $body, $user);
 
     return [
       'id' => rand(20,20000),
@@ -45,6 +46,8 @@ class Feed {
     $comments = Database::getDB()->getCommentsByPostId($id);
     foreach($comments as $i => $comment){
       $comments[$i]['published'] = date("Y-m-d H:i:s", $comments[$i]['published']);
+
+      //make sure we only send the user info we need to
       $comments[$i]['author'] = [
         'username' => $comments[$i]['author']['username'],
         'fullname' => $comments[$i]['author']['fullname'],
@@ -84,17 +87,24 @@ class Feed {
       throw new Exception('Invalid post data!', 400);
 
 
-
+    //Strip input of any potentially maillicious code
     $title = filter_var($input['title'], FILTER_SANITIZE_STRING);
     $body = filter_var($input['body'], FILTER_SANITIZE_STRING);
 
+
+    //limit character length of post title and body
     if(strlen($title) < 3 || strlen($body) < 3){
       throw new Exception('Post title and body must be 3 or more characters long!', 400);
+    }else if(strlen($title) > 50){
+      throw new Exception('Max 50 Characters on title!', 400);
+    }else if(strlen($body) > 1000){
+      throw new Exception('Max 1000 Characters in post body!', 400);
     }
 
     //if we were using a real database
     //Database::getDB->addPost($title, $body, $user);
 
+    //Return the postdata
     return [
       'id' => rand(6,20000),
 	    'title' => $title,

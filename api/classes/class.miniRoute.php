@@ -29,20 +29,33 @@
 
 class miniRoute{
 
+//Methods supported.
+//Could add support for more request methods by adding to this array and add a method of same name in class
   private $paths = [
     'GET' => [],
     'POST' => [],
     'PUT' => []
   ];
 
+
   function getRequestMethod(){
     if(array_key_exists($_SERVER['REQUEST_METHOD'], $this->paths)){
       return $_SERVER['REQUEST_METHOD'];
     }else{
-      return "GET";
+      return false;
     }
   }
 
+
+  /**
+  *
+  * Parse user path with our defined path to extract key value pairs
+  *
+  * @param    string  $path /comments/:id
+  * @param    string  $userPath path requested by user /comments/the_id
+  * @return      array ['id' => 'the_id']
+  *
+  */
   function parsePath($path, $userPath){
     $pathKeys = $this->getPathKeys($path);
     $regPath = $this->getRegex($path);
@@ -56,6 +69,14 @@ class miniRoute{
     return $ret;
   }
 
+  /**
+ *
+ * Convert a path string to to regex string
+ *
+ * @param    string  $path /comments/:id => /comments/([A-z0-9]+)
+ * @return      string
+ *
+ */
   function getRegex($path){
     return str_replace('/', '\\/', preg_replace("/:([A-z0-9]+)/", "([A-z0-9]+)", $path));
   }
@@ -65,6 +86,15 @@ class miniRoute{
     return $arr[1];
   }
 
+  /**
+  *
+  * Compare our path to user requested path
+  *
+  * @param    string  $path
+  * @param    string  $userPath
+  * @return      bool
+  *
+  */
   function matchPath($path, $userPath){
     $regPath = $this->getRegex($path);
     $isMatched = preg_match_all("/^" . $regPath . "[\/]?$/", $userPath, $matched);
@@ -97,7 +127,13 @@ class miniRoute{
     $userPath = $_GET['path'];
     $requestMethod = $this->getRequestMethod();
 
-    #Loop through stored endpoints and try match the user path
+    //check if request method is supported or display an error
+    if(!$requestMethod){
+      $this->output(405, 'Request Method not supported');
+      exit;
+    }
+
+    //Loop through stored endpoints and try match the user path
     foreach($this->paths[$requestMethod] as $path => $funcs){
       if($this->matchPath($path, $userPath)){
         try {
@@ -105,15 +141,17 @@ class miniRoute{
           $response = [];
           $middleware = null;
 
-
+          //call middle predefined middleware method if it exists
           if(is_callable($funcs['middleware']))
             $middleware = call_user_func($funcs['middleware'], $matches);
 
+          //call the method defined for the path if it exists
           if(is_callable($funcs['method']))
             $response = call_user_func_array($funcs['method'], [$matches, $middleware]);
 
           $this->output(200, $response);
         } catch (Exception $e) {
+          //output error to client if an exception was cought
           $this->output($e->getCode(), $e->getMessage());
         }
         exit;
