@@ -28,7 +28,7 @@ const FeedActions = Reflux.createActions({
     }
 });
 
-FeedActions.newComment.listen(function(body) {
+FeedActions.newComment.listen(function(id, body) {
     let token = Reflux.GlobalState.authstore.token;
 
     if (!token)
@@ -41,6 +41,7 @@ FeedActions.newComment.listen(function(body) {
             'Authorization': 'Token ' + token
         },
         body: JSON.stringify({
+            'id': id,
             'body': body
         })
     };

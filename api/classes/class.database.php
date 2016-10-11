@@ -189,6 +189,17 @@ public function getUsers(){
 
  }
 
+ public function addComment($userId, $postId, $body){
+   array_push($this->comments, [
+     'id' => count($this->comments) + 1,
+     'body' => 'This is a comment',
+     'post' => $postId,
+     'author' => $userId,
+     'published' => time(),
+   ]);
+   return true;
+ }
+
  public function getCommentsByPostId($id){
    $comments = [];
    $dataComments = $this->comments;
@@ -208,11 +219,22 @@ public function getUsers(){
    return $comments;
  }
 
- public function getPostById(){
-   $post = [];
+ public function addPost($userId, $title, $body){
+   array_push($this->feed, [
+     'id' => count($this->feed) + 1,
+     'title' => $title,
+     'content' => $body,
+     'author' => $userId,                    #author uid -to link the article to a author
+     'published'=> time(),         #timestamp easily converted to date
+     'likes' => 0,
+   ]);
+   return true;
+ }
+
+ public function getPostById($id){
    foreach($this->feed as $post){
-     if($userId === $feed['author']){
-       array_push($feeds, $feed);
+     if($id === $post['id']){
+       return $post;
      }
    }
  }

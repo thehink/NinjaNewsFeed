@@ -21,7 +21,7 @@ onSubmitPost(event) {
   event.preventDefault();
   let body = ReactDOM.findDOMNode(this.refs.body).value;
   ReactDOM.findDOMNode(this.refs.body).value = '';
-  FeedActions.newComment(body);
+  FeedActions.newComment(this.props.id, body);
 }
 
   render() {

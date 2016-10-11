@@ -40,7 +40,7 @@ renderCommentEntry({id, author, body, published}) {
       <b>Comments</b>
       {this.state.comments.map(this.renderCommentEntry)}
       {this.state.isLoading?'Loading...':''}
-      {this.state.error ? (<Alert bsStyle="danger">{this.state.error.message}</Alert>) : ''}
+      {this.state.commentError ? (<Alert bsStyle="danger">{this.state.commentError.message}</Alert>) : ''}
       {this.state.authed ? (
         <CommentForm id={this.props.id}/>) :
         (<div><Link to="/login">Login to post a comment...</Link></div>)

@@ -17,7 +17,7 @@ class FeedStore extends Reflux.Store
     newComment(){
       this.setState({
         loading: true,
-        error: false
+        commentError: false
       });
     }
 
@@ -25,13 +25,13 @@ class FeedStore extends Reflux.Store
       this.state.comments.unshift(comment);
       this.setState({
         loading: false,
-        error: false
+        commentError: false
       });
     }
 
     newCommentFailed(error){
       this.setState({
-        error: error,
+        commentError: error,
         loading: false
       });
     }

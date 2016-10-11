@@ -17,17 +17,26 @@ class Feed {
     if(!$input)
       throw new Exception('Invalid comment data!', 400);
 
-    if(!isset($input['body']))
+    if(!isset($input['body']) || !isset($input['id']))
       throw new Exception("No comment body!", 400);
 
     //Strip input of any potentially maillicious code
+    $post = Database::getDB()->getPostById((int)$input['id']);
     $body = filter_var($input['body'], FILTER_SANITIZE_STRING);
 
+    if(!$post)
+      throw new Exception("The post you tried to comment on doesn't exist in Database!", 400);
+
     if(strlen(str_replace(' ', '', $body)) < 3){
-      throw new Exception("You need at least 3 characters!", 403);
+      throw new Exception("You need at least 3 characters!", 400);
     }else if(strlen($body) > 500){
-      throw new Exception("Max 500 characters in a comment!", 403);
+      throw new Exception("Max 500 characters in a comment!", 400);
     }
+
+    $success = Database::getDB()->addComment($user['id'], $post['id'], $body);
+
+    if(!$success)
+      throw new Exception("Could not add comment to database!", 400);
 
     return [
       'id' => rand(20,20000),
@@ -101,8 +110,10 @@ class Feed {
       throw new Exception('Max 1000 Characters in post body!', 400);
     }
 
-    //if we were using a real database
-    //Database::getDB->addPost($title, $body, $user);
+    $success = Database::getDB()->addPost($user['id'], $title, $body);
+
+    if(!$success)
+      throw new Exception("Could not add post to database!", 400);
 
     //Return the postdata
     return [
